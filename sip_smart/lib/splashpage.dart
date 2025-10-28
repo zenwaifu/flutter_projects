@@ -30,7 +30,7 @@ class _SplashpageState extends State<Splashpage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/sip_smart_logo.jpg',
+              'assets/sip_smart_logo1.png',
               scale: 3,
             ),
             SizedBox(height: 10),

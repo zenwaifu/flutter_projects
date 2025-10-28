@@ -107,26 +107,9 @@ class _HomepageState extends State<Homepage> {
                       style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: primaryBlue)
                       ),
                     ),
-                    SizedBox(
-                      child: DropdownButtonFormField<String>(
+                    DropdownButton<String>(
                         value: _selectedGender,
-                        hint: Text('Select Gender'), style: TextStyle(fontSize: 12),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide(
-                              color: primaryBlue,
-                              width: 2.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide(
-                              color: Colors.blueGrey,
-                              width: 2.0,
-                            ),
-                          ),
-                        ),
+                        hint: Text('Select Activity Level'),
                         items: _gender.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -138,10 +121,9 @@ class _HomepageState extends State<Homepage> {
                             _selectedGender = newValue;
                             });
                         },
-                        //borderRadius: BorderRadius.circular(8.0),
-                        //padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        borderRadius: BorderRadius.circular(8.0),
+                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                       ),
-                    ),
                   ],
                 ),
                 SizedBox(height: 5),
@@ -401,13 +383,13 @@ class _HomepageState extends State<Homepage> {
     //Adjust by temperature
     switch (_selectedTemperature) {
        case 'Cold' :
-        waterMl *= 1.2;
+        waterMl *= 1.0;
         break;
        case 'Warm' :
-        waterMl *= 1.4;
+        waterMl *= 1.2;
         break;
        case 'Hot' :
-        waterMl *= 1.6;
+        waterMl *= 1.4;
         break;
        default:
         break;
