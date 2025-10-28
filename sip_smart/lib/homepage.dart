@@ -331,6 +331,26 @@ class _HomepageState extends State<Homepage> {
   }
 
   void calculateWaterIntake() {
+    if (weightController.text.isEmpty || double.parse(weightController.text) <= 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Invalid input. Enter a positive number for weight'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+    }
+
+    if (activityDurationController.text.isEmpty || double.parse(activityDurationController.text) <= 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Invalid input. Enter a positive number for activity duration'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+    }
+
     if (weightController.text.isEmpty ||
         activityDurationController.text.isEmpty ||
         _selectedGender == null ||
