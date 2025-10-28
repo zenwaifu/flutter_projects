@@ -12,6 +12,7 @@ class _HomepageState extends State<Homepage> {
   final Color primaryPurple = Color.fromRGBO(224, 64, 251, 1);
 
   int? weeksNeeded;
+  
 
   String? _selectedReason;
   String? _selectedPriority;
@@ -20,7 +21,8 @@ class _HomepageState extends State<Homepage> {
   TextEditingController savingPerWeekController = TextEditingController();
   TextEditingController startingBalanceController = TextEditingController();
   
-  double resultWeeks = 0.0;
+  double resultWeeks = 0;
+  double remainingAmount = 0;
 
   FocusNode targetFocusNode = FocusNode();
   //FocusNode savingFocusNode = FocusNode();  
@@ -346,9 +348,11 @@ class _HomepageState extends State<Homepage> {
                         startingBalanceController.clear();
                         _selectedReason = null;
                         _selectedPriority = null;
+                        
 
                         resultWeeks = 0.0;
-
+                        remainingAmount = 0.0;
+                        
                         FocusScope.of(context).requestFocus(targetFocusNode);
                         targetFocusNode.requestFocus();
 
@@ -382,6 +386,23 @@ class _HomepageState extends State<Homepage> {
                       ),
                     ],
                   ),
+                ),
+                Container(
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.money, size: 20, color: primaryPurple),
+                      Text('Remaining Amount: ',
+                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: primaryPurple),
+                      ),
+                      SizedBox(width: 5),
+                      Text(remainingAmount.toStringAsFixed(2),
+                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: primaryPurple),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
@@ -395,6 +416,7 @@ class _HomepageState extends State<Homepage> {
     String targetText = targetAmountController.text.trim();
     String savingText = savingPerWeekController.text.trim();
     String balanceText = startingBalanceController.text.trim();
+    
     //validate empty or null fields
     if (
       targetText.isEmpty || 
@@ -454,6 +476,7 @@ class _HomepageState extends State<Homepage> {
       );
       setState(() {
         resultWeeks = 0.0;
+        remaining = 0.0;
       });
       return;
     }
@@ -462,6 +485,7 @@ class _HomepageState extends State<Homepage> {
     double weeksNeeded = remaining / savingPerWeek;
     setState(() {
       resultWeeks = weeksNeeded;
+      remainingAmount = remaining;
     });
 
     //Show success message
@@ -470,9 +494,10 @@ class _HomepageState extends State<Homepage> {
         content: Text(
           'Goal: $_selectedReason\n'
           'Priority: $_selectedPriority\n'
-          'You can reach your goal in ${weeksNeeded.toStringAsFixed(2)} weeks.',
+          'You can reach your goal in ${weeksNeeded.toStringAsFixed(2)} weeks \n'
+          'with currently remaining balance of ${remaining.toStringAsFixed(2)}',
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.greenAccent,
         duration: Duration(seconds: 3),
       ),
     );

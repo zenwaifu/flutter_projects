@@ -376,26 +376,11 @@ class _HomepageState extends State<Homepage> {
     );
   }
 
-  void calculateWaterIntake() {
-    if (weightController.text.isEmpty || double.parse(weightController.text) <= 0) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Invalid input. Enter a positive number for weight'),
-              backgroundColor: Colors.red,
-            ),
-          );
-          return;
-    }
 
-    if (activityDurationController.text.isEmpty || double.parse(activityDurationController.text) <= 0) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Invalid input. Enter a positive number for activity duration'),
-              backgroundColor: Colors.red,
-            ),
-          );
-          return;
-    }
+  void calculateWaterIntake() {
+
+    String weightText = weightController.text.trim();
+    String activityDurationText = activityDurationController.text.trim();
 
     if (weightController.text.isEmpty ||
         activityDurationController.text.isEmpty ||
@@ -405,6 +390,30 @@ class _HomepageState extends State<Homepage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Please fill in all the fields.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+    }
+
+    double? weightKg = double.tryParse(weightText);
+    double? activityDurationMin = double.tryParse(activityDurationText);
+
+    if (
+      weightKg == null || 
+      activityDurationMin == null 
+      ) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please enter valid numeric values.'),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+    return;
+    } 
+    if (double.parse(weightController.text) <= 0 || double.parse(activityDurationController.text) <= 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Invalid input. Please enter positive values.'),
               backgroundColor: Colors.red,
             ),
           );
