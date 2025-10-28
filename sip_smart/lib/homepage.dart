@@ -79,7 +79,7 @@ class _HomepageState extends State<Homepage> {
                 ),
               ],
             ),
-            width: 350,
+            width: 400,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -107,26 +107,40 @@ class _HomepageState extends State<Homepage> {
                       style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: primaryBlue)
                       ),
                     ),
-                    DropdownButton<String>(
-                        value: _selectedGender,
-                        hint: Text('Select Activity Level'),
-                        items: _gender.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedGender = newValue;
-                            });
-                        },
-                        borderRadius: BorderRadius.circular(8.0),
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    Expanded(
+                      child: Container(
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                          border: Border.all(
+                            color: primaryBlue,
+                            width: 2.0,
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                              value: _selectedGender,
+                              hint: Text('Select'),
+                              items: _gender.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedGender = newValue;
+                                  });
+                              },
+                              borderRadius: BorderRadius.circular(8.0),
+                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                            ),
+                        ),
                       ),
+                    ),
                   ],
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 10),
                 //Input - weight
                 Row(
                   children: [
@@ -136,34 +150,36 @@ class _HomepageState extends State<Homepage> {
                       style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: primaryBlue,)
                       ),
                     ),
-                    SizedBox(
-                      width: 200,
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        controller: weightController,
-                        focusNode: weightFocusNode,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide(
-                              color: primaryBlue,
-                              width: 2.0,
+                    Expanded(
+                      child: SizedBox(
+                        width: 150,
+                        child: TextField(
+                          keyboardType: TextInputType.number,
+                          controller: weightController,
+                          focusNode: weightFocusNode,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
                             ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide(
-                              color: Colors.blueGrey,
-                              width: 2.0,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: primaryBlue,
+                                width: 2.0,
+                              ),
                             ),
-                          ),
-                          labelText: 'Weight (kg)', labelStyle: TextStyle(fontSize: 12),
-                          hintText: 'e.g. 70.6',
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Colors.blueGrey,
+                                width: 2.0,
+                              ),
+                            ),
+                            labelText: 'Weight (kg)', labelStyle: TextStyle(fontSize: 12),
+                            hintText: 'e.g. 70.6',
+                          )
                         )
-                      )
+                      ),
                     ),
                   ],
                 ),
@@ -177,33 +193,35 @@ class _HomepageState extends State<Homepage> {
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: primaryBlue)
                       ),
                     ),
-                    SizedBox(
-                      width: 200,
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        controller: activityDurationController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide(
-                              color: primaryBlue,
-                              width: 2.0,
+                    Expanded(
+                      child: SizedBox(
+                        width: 150,
+                        child: TextField(
+                          keyboardType: TextInputType.number,
+                          controller: activityDurationController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
                             ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide(
-                              color: Colors.blueGrey,
-                              width: 2.0,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: primaryBlue,
+                                width: 2.0,
+                              ),
                             ),
-                          ),
-                          labelText: 'Activity Duration(min)', labelStyle: TextStyle(fontSize: 12),
-                          hintText: 'e.g. 90'
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Colors.blueGrey,
+                                width: 2.0,
+                              ),
+                            ),
+                            labelText: 'Activity Duration(min)', labelStyle: TextStyle(fontSize: 12),
+                            hintText: 'e.g. 90'
+                          )
                         )
-                      )
+                      ),
                     ),
                   ],
                 ),
@@ -217,26 +235,40 @@ class _HomepageState extends State<Homepage> {
                       style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: primaryBlue)
                       ),
                     ),
-                    DropdownButton<String>(
-                        value: _selectedActivity,
-                        hint: Text('Select Activity Level'),
-                        items: _activityLevel.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedActivity = newValue;
-                            });
-                        },
-                        borderRadius: BorderRadius.circular(8.0),
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    Expanded(
+                      child: Container(
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                          border: Border.all(
+                            color: primaryBlue,
+                            width: 2.0,
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                              value: _selectedActivity,
+                              hint: Text('Select'),
+                              items: _activityLevel.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedActivity = newValue;
+                                  });
+                              },
+                              borderRadius: BorderRadius.circular(8.0),
+                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
+                            ),
+                        ),
                       ),
+                    ),
                   ],
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 10),
                 //Input Temperature
                 Row(
                   children: [
@@ -246,23 +278,37 @@ class _HomepageState extends State<Homepage> {
                       style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: primaryBlue)
                       ),
                     ),
-                    DropdownButton<String>(
-                        value: _selectedTemperature,
-                        hint: Text('Select Temperature'),
-                        items: _temperature.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedTemperature = newValue;
-                            });
-                        },
-                        borderRadius: BorderRadius.circular(8.0),
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    Expanded(
+                      child: Container(
+                        width: 150, 
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                          border: Border.all(
+                            color: primaryBlue,
+                            width: 2.0,
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                              value: _selectedTemperature,
+                              hint: Text('Select'),
+                              items: _temperature.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedTemperature = newValue;
+                                  });
+                              },
+                              borderRadius: BorderRadius.circular(8.0),
+                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                            ),
+                        ),
                       ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 10),
