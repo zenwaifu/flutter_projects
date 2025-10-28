@@ -1,0 +1,4 @@
+cd C:\flutter\mb_proj
+git add .
+git commit -m "Can be anything"
+git push
