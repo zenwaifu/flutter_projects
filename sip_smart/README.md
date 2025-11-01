@@ -2,8 +2,6 @@
 
 A new Flutter project.
 
-## Getting Started
-
 Name: Hemavathi A/P Balakrishnan
 Matric: 303756
 Session: A251

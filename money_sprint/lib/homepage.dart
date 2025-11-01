@@ -8,7 +8,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  //default blue shade color
+  //default purple shade color
   final Color primaryPurple = Color.fromRGBO(224, 64, 251, 1);
 
   int? weeksNeeded;
@@ -24,8 +24,7 @@ class _HomepageState extends State<Homepage> {
   double resultWeeks = 0;
   double remainingAmount = 0;
 
-  FocusNode targetFocusNode = FocusNode();
-  //FocusNode savingFocusNode = FocusNode();  
+  FocusNode targetFocusNode = FocusNode(); 
 
   //dropdown reason saving for saving
   static final List<String> _reasonSaving = [
@@ -97,7 +96,7 @@ class _HomepageState extends State<Homepage> {
                   ],
                 ),
                 SizedBox(height: 10),
-                //Input - Target Amount
+                //Input - Reason for Saving
                 Row(
                   children: [
                     Expanded( 
