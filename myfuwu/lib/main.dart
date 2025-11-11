@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myfuwu/splash.dart';
+import 'package:myfuwu/views/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,23 +25,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainApp extends StatefulWidget {
-  const MainApp({super.key});
-
-  @override
-  State<MainApp> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Main App'),
-      ),
-      body: const Center(
-        child: Text('Welcome to the Main Page!'),
-      ),
-    );
-  }
-}

@@ -1,1 +1,9 @@
 Ctrl + Alt + I == chat --> copilot?
+
+
+MySQL L80 -- manually start the service!!!
+--steps--
+1. win + R
+2. services.msc
+3. search MYSQL80 
+4. manually start or stop

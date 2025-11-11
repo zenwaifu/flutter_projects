@@ -2,3 +2,7 @@ cd C:\flutter\mb_proj
 git add .
 git commit -m "Can be anything"
 git push
+
+
+README.md --> upload image in github
+![image alt](image_url)
