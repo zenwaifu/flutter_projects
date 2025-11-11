@@ -33,7 +33,7 @@ double rating;
       imageUrl: json['image_url'] ?? 'NA',
       latitude: double.tryParse(json['latitude'].toString()) ?? 0.0,
       longitude: double.tryParse(json['longitude'].toString()) ?? 0.0,
-      contact: json['contact'] ?? 'N/A',
+      contact: json['contact'] ?? 'NA',
       rating: double.tryParse(json['rating'].toString()) ?? 0.0,
     );
   }
