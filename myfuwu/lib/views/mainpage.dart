@@ -1,32 +1,197 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:myfuwu/views/register.dart';
+import 'package:http/http.dart' as http;
+import 'package:myfuwu/models/myservice.dart';
+import 'package:myfuwu/myconfig.dart';
+import 'package:myfuwu/views/loginpage.dart';
+import 'package:myfuwu/models/user.dart';
+import 'package:myfuwu/shared/mydrawer.dart';
+import 'package:myfuwu/views/newservicepage.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final User? user;
+
+  const MainPage({super.key, required this.user});
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
+  List<MyService> listServices = [];
+  String status = "Loading...";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadServices('');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Main Page'),
+        title: Text('Main Page'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearchDialog();
+            },
+          ),
+          IconButton(
+            onPressed: () {
+              loadServices('');
+            },
+            icon: Icon(Icons.refresh),
+          ),
+
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+            icon: Icon(Icons.login),
+          ),
+        ],
       ),
-      body: const Center(
-        child: Text('Welcome to the Main Page!'),
+      body: Center(
+        child: Column(
+          children: [
+            listServices.isEmpty
+                ? Center(child: Text(status))
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount: listServices.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          elevation: 5,
+                          child: ListTile(
+                            // contentPadding: EdgeInsets.all(8),
+                            leading: SizedBox(
+                              child: Image.network(
+                                '${MyConfig.baseUrl}/myfuwu/assets/services/service_${listServices[index].serviceId}.PNG',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            title: Text(
+                              listServices[index].serviceTitle.toString(),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  listServices[index].serviceDesc.toString(),
+                                ),
+                                Text(
+                                  listServices[index].serviceDistrict
+                                      .toString(),
+                                ),
+                              ],
+                            ),
+                            trailing: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.arrow_forward_ios),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context, 
-            MaterialPageRoute(builder: (context) => const RegisterPage() // Replace with your target page
-          ));
+        onPressed: () async {
+          // Action for the button
+          if (widget.user?.userId == '0') {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Please login first/or register first"),
+                backgroundColor: Colors.red,
+              ),
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+            );
+          } else {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewServicePage(user: widget.user),
+              ),
+            );
+            loadServices('');
+          }
         },
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
+      drawer: MyDrawer(user: widget.user),
+    );
+  }
+
+  void loadServices(String searchQuery) {
+    // TODO: implement loadServices
+    http.get(Uri.parse('${MyConfig.baseUrl}/myfuwu/api/loadservices.php?search=$searchQuery')).then(
+      (response) {
+        if (response.statusCode == 200) {
+          var jsonResponse = response.body;
+          var data = jsonDecode(jsonResponse);
+          listServices.clear();
+          for (var item in data['data']) {
+            listServices.add(MyService.fromJson(item));
+          }
+          setState(() {
+            status = "";
+          });
+          // print(jsonResponse);
+        } else {
+          setState(() {
+            status = "Failed to load services";
+          });
+        }
+      },
+    );
+  }
+
+  void showSearchDialog() {
+    TextEditingController searchController = TextEditingController(); 
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Search'),
+          content: TextField(
+            controller: searchController,
+            decoration: InputDecoration(
+              hintText: 'Enter search query',
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Search'),
+              onPressed: () {
+                String search = searchController.text;
+                if (search.isEmpty) {
+                  loadServices('');
+                } else {
+                  loadServices(search);
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
