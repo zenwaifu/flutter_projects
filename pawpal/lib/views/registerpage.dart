@@ -329,7 +329,7 @@ class _RegisterPageState extends State<RegisterPage> {
           'name': name, 
           'email': email,
           'password': password,
-          'phone': phone
+          'phone': phone,
         },
       )
       .then((response) {
