@@ -7,7 +7,8 @@ plugins {
 
 android {
     namespace = "com.zenwaifu.pawpal"
-    compileSdk = flutter.compileSdkVersion
+    //compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
