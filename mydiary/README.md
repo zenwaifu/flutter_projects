@@ -8,3 +8,7 @@ create, view, edit and delete entries, image support, search functionality, pagi
 
 # splashscreen
 ![mydiary/app_ss/splashscreen.png](https://github.com/zenwaifu/flutter_projects/blob/d35d915c1b38b4a34c5437846fda8aca51ca68ef/mydiary/app_ss/splashscreen.png)
+
+# mainscreen no data and with data
+![mydiary/app_ss/mainscreen_nodata.png](https://github.com/zenwaifu/flutter_projects/blob/e99bb3afb2607b04fba024f52748122b208b332f/mydiary/app_ss/mainscreen_nodata.png)
+![mydiary/app_ss/mainscreen_data.png](https://github.com/zenwaifu/flutter_projects/blob/e99bb3afb2607b04fba024f52748122b208b332f/mydiary/app_ss/mainscreen_data.png)
