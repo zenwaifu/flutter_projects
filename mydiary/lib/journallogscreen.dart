@@ -516,7 +516,7 @@ class _JournalLogScreenState extends State<JournalLogScreen> {
     if (mounted) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Entry saved successfully", textAlign: TextAlign.center,), duration: Duration(seconds: 2), backgroundColor: Colors.greenAccent,));
+      ).showSnackBar(const SnackBar(content: Text("Journal saved successfully", textAlign: TextAlign.center,), duration: Duration(seconds: 2), backgroundColor: Colors.greenAccent,));
       Navigator.pop(context);
     }
   }

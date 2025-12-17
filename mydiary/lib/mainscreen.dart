@@ -93,13 +93,6 @@ class _MainScreenState extends State<MainScreen> {
                           fontWeight: FontWeight.w900,
                           fontSize: 40,
                           color: Colors.white,
-                          // shadows: const [
-                          //   Shadow(
-                          //     color: Colors.white,
-                          //     offset: Offset(1, 1),
-                          //     blurRadius: 3,
-                          //   ),
-                          // ],
                         ),
 
                       )
@@ -614,7 +607,7 @@ class _MainScreenState extends State<MainScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Search Diary Entry",
+                  "Search Diary Journal",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color:darkpink ),
                 ),
                 const SizedBox(height: 10),
@@ -728,7 +721,7 @@ class _MainScreenState extends State<MainScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Edit Entry",
+                      "Edit Journal",
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -872,12 +865,12 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "Delete Entry?",
+                  "Delete Jounal?",
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.redAccent),
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "This action cannot be undone.\nAre you sure you want to delete this entry?",
+                  "This action cannot be undone.\nAre you sure you want to delete this journal?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
@@ -921,7 +914,7 @@ class _MainScreenState extends State<MainScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 backgroundColor: Colors.greenAccent,
-                                content: Text("Entry deleted successfully", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 16),),
+                                content: Text("Journal deleted successfully", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 16),),
                               ),
                             );
                           }
