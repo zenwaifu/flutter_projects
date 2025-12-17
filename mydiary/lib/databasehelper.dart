@@ -1,4 +1,3 @@
-
 import 'package:mydiary/diarylist.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -53,7 +52,7 @@ class DatabaseHelper {
     final db = await database;
 
     final data = diarylist.toMap();
-    data.remove("id"); // ⬅️ Force auto-increment
+    data.remove("id"); 
 
     return await db.insert(tablename, data);
   }
@@ -61,7 +60,6 @@ class DatabaseHelper {
   //read all 
   Future<List<DiaryList>> getDiaryListsPaginated(int limit, int offset) async {
     final db = await database;
-    // offset = offset - 1;
     final List<Map<String, dynamic>> result = await db.query(
       tablename,
       orderBy: 'id DESC',
@@ -88,7 +86,7 @@ class DatabaseHelper {
       'SELECT COUNT(*) as total FROM $tablename',
     );
 
-    // result looks like: [{total: 25}]
+    // result looks like: [{total: 30}]
     return Sqflite.firstIntValue(result) ?? 0;
   }
 
