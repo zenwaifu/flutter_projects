@@ -7,4 +7,4 @@ create, view, edit and delete entries, image support, search functionality, pagi
 # screenshots of app
 
 # splashscreen
-![image alt]("mydiary/app_ss/splashscreen.png")
+![mydiary/app_ss/splashscreen.png"]
