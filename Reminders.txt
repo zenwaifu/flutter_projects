@@ -7,3 +7,8 @@ MySQL L80 -- manually start the service!!!
 2. services.msc
 3. search MYSQL80 
 4. manually start or stop
+
+
+cpanel - file manager, phpMyAdmin, mysqldatabase or mysqldatabase wizard
+	- file manager - server directory in public html - default directory for server if didn't create a subdomain directory
+jobhosting - 2gb - rm50

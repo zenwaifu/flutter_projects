@@ -309,6 +309,12 @@ class _MyServicePageState extends State<NewServicePage> {
     }
   }
 
+/// Show a dialog to submit a service.
+///
+/// Checks for title, image, hourly rate, and description.
+/// If any fields are empty, shows a snackbar with an error message.
+/// If all fields are valid, shows a confirm dialog to submit the service.
+/// If the user confirms, calls [submitService] to submit the service.
   void showSubmitDialog() {
     // Title validation
     if (titleController.text.trim().isEmpty) {

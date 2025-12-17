@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -7,6 +7,7 @@ import 'package:pawpal/models/mypet.dart';
 import 'package:pawpal/models/user.dart';
 import 'package:pawpal/myconfig.dart';
 import 'package:pawpal/shared/mydrawer.dart';
+import 'package:pawpal/shared/pawloading.dart';
 import 'package:pawpal/views/loginpage.dart';
 import 'package:pawpal/views/submitpetscreen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,12 +33,12 @@ class _MainPageState extends State<MainPage> {
   int numOfResult = 0;
   var color;
 
-  User? currentUser; 
+  //User? currentUser; 
 
   @override
   void initState() {
     super.initState();
-    loadPets("");
+    loadPets('');
   }
 
   @override
@@ -68,7 +69,7 @@ class _MainPageState extends State<MainPage> {
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: (){
-              loadPets("");
+              loadPets('');
             },
           ),
           IconButton(
@@ -85,20 +86,13 @@ class _MainPageState extends State<MainPage> {
       body: Center(
         child: SizedBox(
           width: screenWidth,
-          // The main Column needs to be wrapped by a widget that gives it a constrained height,
-          // such as an Expanded, if you want the inner list to take up the remaining space.
-          // Since the outer 'body' is usually a Scaffold's body, its height is constrained.
-          // However, if the Center/SizedBox doesn't give a height, we need to ensure the list
-          // is properly constrained. Assuming 'screenWidth' is the width of the screen,
-          // we assume the parent (body) provides the height constraint, but since Column's height is
-          // unbounded here, the best fix is to only have ONE Expanded for the list part.
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Column( // This inner Column is where the issue is.
-                  mainAxisAlignment: MainAxisAlignment.start, // Changed to 'start' as 'center' will push the content to the center of the available space, which is usually not what you want for a scrollable view setup.
-                  mainAxisSize: MainAxisSize.min, // Keep top elements tightly packed
+                child: Column( 
+                  mainAxisAlignment: MainAxisAlignment.start, 
+                  mainAxisSize: MainAxisSize.min, 
                   children: [
                     //Welcome Message box
                     Container(
@@ -129,11 +123,11 @@ class _MainPageState extends State<MainPage> {
                                   TextSpan(
                                       text: "Hi, ${widget.user!.user_name}!\n",
                                       style: TextStyle(fontWeight: FontWeight.bold)),
-                                TextSpan(text: 'Find your'),
-                                TextSpan(
-                                    text: '\nfurry best friend',
-                                    style: TextStyle(fontWeight: FontWeight.bold)),
-                                TextSpan(text: '\ntoday!'),
+                                  TextSpan(text: 'Find your'),
+                                  TextSpan(
+                                      text: '\nfurry best friend',
+                                      style: TextStyle(fontWeight: FontWeight.bold)),
+                                  TextSpan(text: '\ntoday!'),
                               ],
                             ),
                           ),
@@ -143,7 +137,7 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    // Login Button Box -- only show when user is not logged in
+                    // Login Button Box - only show when user is not logged in
                     if (widget.user == null)
                       Container(
                         decoration: BoxDecoration(
@@ -164,7 +158,8 @@ class _MainPageState extends State<MainPage> {
                             );
                             if (result != null && result is User) {
                               setState(() {
-                                currentUser = result;
+                                //intead of currentUser = result;
+                                widget.user == result;
                               });
                             }
                           },
@@ -180,8 +175,7 @@ class _MainPageState extends State<MainPage> {
                                   color: mainPink,
                                 ),
                                 SizedBox(
-                                    height:
-                                        10), // This should likely be SizedBox(width: 10) for horizontal space
+                                    height: 10),
                                 Text(
                                   'Login',
                                   style: TextStyle(
@@ -198,12 +192,12 @@ class _MainPageState extends State<MainPage> {
                   ],
                 ),
               ),
-              //Pets List - This MUST be an Expanded to consume the remaining space
+              //Pets List 
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10), // Padding applied here for the list
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: listPets.isEmpty
-                      ? Center( // No need for Expanded around Center here
+                      ? Center(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -228,14 +222,14 @@ class _MainPageState extends State<MainPage> {
                             ],
                           ),
                         )
-                      : ListView.builder( // No need for Expanded around ListView.builder here
+                      : ListView.builder(
                           itemCount: listPets.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Card(
                               elevation: 4,
                               margin: const EdgeInsets.symmetric(
                                 vertical: 6,
-                                horizontal: 8, // Horizontal margin inside the 10 padding
+                                horizontal: 8, 
                               ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -252,23 +246,29 @@ class _MainPageState extends State<MainPage> {
                                         width: screenWidth * 0.28,
                                         height: screenWidth * 0.22,
                                         color: mainPink,
-                                        child: Image.network(
-                                          '${MyConfig.baseUrl}/myfuwu/assets/services/service_${listPets[index].petId}.png',
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return const Icon(
-                                              Icons.broken_image,
-                                              size: 60,
-                                              color: Colors.grey,
-                                            );
-                                          },
-                                        ),
+                                        child: listPets[index].imagePaths!.isNotEmpty
+                                            ? ListView.builder(
+                                                scrollDirection: Axis.horizontal,
+                                                itemCount: listPets[index].imagePaths!.length,
+                                                itemBuilder: (context, imgIndex) {
+                                                  return Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                                    child: Image.network(
+                                                      '${MyConfig.baseUrl}/pawpal/assets/pets/pets_${listPets[index].imagePaths?[imgIndex]}',
+                                                      fit: BoxFit.cover,
+                                                      width: screenWidth * 0.28,
+                                                      height: screenWidth * 0.22,
+                                                      errorBuilder: (context, error, stackTrace) {
+                                                        return const Icon(Icons.broken_image, size: 60, color: Colors.grey);
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              )
+                                            : const Icon(Icons.broken_image, size: 60, color: Colors.grey),
                                       ),
                                     ),
-
                                     const SizedBox(width: 12),
-
                                     // TEXT AREA
                                     Expanded(
                                       child: Column(
@@ -281,6 +281,7 @@ class _MainPageState extends State<MainPage> {
                                             style: const TextStyle(
                                               fontSize: 17,
                                               fontWeight: FontWeight.w600,
+                                              color: Color.fromRGBO(215, 54, 138, 1),
                                             ),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
@@ -293,7 +294,7 @@ class _MainPageState extends State<MainPage> {
                                             listPets[index].petType.toString(),
                                             style: const TextStyle(
                                               fontSize: 14,
-                                              color: Colors.black87,
+                                              color: Color.fromRGBO(215, 54, 138, 1),
                                             ),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
@@ -320,8 +321,8 @@ class _MainPageState extends State<MainPage> {
                                                 fontSize: 13,
                                                 color: Colors.blueGrey,
                                               ),
-                                              maxLines: 1, // Added to prevent overflow
-                                              overflow: TextOverflow.ellipsis, // Added to prevent overflow
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         ],
@@ -346,17 +347,42 @@ class _MainPageState extends State<MainPage> {
                         ),
                 ),
               ),
+              //pagination controls
+              SizedBox(
+                height: screenHeight * 0.05,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: numOfPage,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    color = (currentPage == index + 1)
+                        ? mainPink
+                        : Colors.black;
+                    return TextButton(
+                      onPressed: () {
+                        currentPage = index + 1;
+                        loadPets('');
+                      }, 
+                      child: Text(
+                        (index + 1).toString(),
+                        style: TextStyle(color: color, fontSize: 16),
+                      ),
+                    );
+                  }
+                )
+              )
             ],
           ),
         ),
       ),
+      //floating action button to add new pet
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           if(widget.user?.user_id == '0') {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text("Please login first/or register first"),
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.redAccent,
               ),
             );
             Navigator.push(
@@ -370,7 +396,7 @@ class _MainPageState extends State<MainPage> {
                 builder: (context) => SubmitPetScreen(user: widget.user),
               ),
             );
-            loadPets("");
+            loadPets('');
           }
         },
         backgroundColor: mainPink,
@@ -384,12 +410,13 @@ class _MainPageState extends State<MainPage> {
   void loadPets(String searchQuery) {
     listPets.clear();
     setState(() {
-      statusMsg = statusMsg;
+      statusMsg = "Loading...";
+      PawLoading();
     });
     http
       .get(
         Uri.parse(
-          "${MyConfig.baseUrl}/pawpal/api/get_my_pets.php?search=$searchQuery&currentpage=$currentPage"
+          "${MyConfig.baseUrl}/pawpal/api/get_my_pets.php?search=$searchQuery&curPage=$currentPage"
         )
       )
       .then((response) {
@@ -404,9 +431,9 @@ class _MainPageState extends State<MainPage> {
               for (var item in jsonResponse['data']) {
                 listPets.add(MyPet.fromJson(item));
               }
-              numOfPage = int.parse(jsonResponse['numofpage'].toString());
+              numOfPage = int.parse(jsonResponse['numOfPage'].toString());
               numOfResult = int.parse(
-                jsonResponse['numberofresult'].toString(),
+                jsonResponse['numOfResult'].toString(),
               );
               print(numOfPage);
               print(numOfResult);
@@ -483,18 +510,10 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   SizedBox(
                     child: Image.network(
-                      '${MyConfig.baseUrl}/pawpal/assets/services/service_${listPets[index].petId}.png',
+                      '${MyConfig.baseUrl}/pawpal/assets/pets/pets_/${listPets[index].imagePaths}.png', 
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(
-                          Icons.broken_image,
-                          size: 128,
-                          color: Colors.grey,
-                        );
-                      },
-                    ),
+                    )
                   ),
-
                   SizedBox(height: 10),
                   Table(
                     border: TableBorder.all(
@@ -510,7 +529,6 @@ class _MainPageState extends State<MainPage> {
                       TableRow(
                         children: [
                           TableCell(
-                            // Use TableCell to apply consistent styling/padding
                             verticalAlignment:
                                 TableCellVerticalAlignment.middle,
                             child: Padding(
@@ -682,28 +700,28 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ],
                       ),
-                      TableRow(
-                        children: [
-                          TableCell(
-                            verticalAlignment:
-                                TableCellVerticalAlignment.middle,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('Image'),
-                            ),
-                          ),
-                          TableCell(
-                            verticalAlignment:
-                                TableCellVerticalAlignment.middle,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                listPets[index].imagePaths.toString(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // TableRow(
+                      //   children: [
+                      //     TableCell(
+                      //       verticalAlignment:
+                      //           TableCellVerticalAlignment.middle,
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.all(8.0),
+                      //         child: Text('Image'),
+                      //       ),
+                      //     ),
+                      //     TableCell(
+                      //       verticalAlignment:
+                      //           TableCellVerticalAlignment.middle,
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.all(8.0),
+                      //         child: Text(
+                      //           listPets[index].imagePaths.toString(),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                   SizedBox(height: 5),
@@ -771,5 +789,27 @@ class _MainPageState extends State<MainPage> {
         );
       },
     );
+  }
+
+  Future<User> getServiceOwnerDetails(int index) async {
+    String ownerid = listPets[index].user_id.toString();
+    User owner = User();
+    try {
+      final response = await http.get(
+        Uri.parse(
+          '${MyConfig.baseUrl}/pawpal/api/get_user_details.php?userid=$ownerid',
+        ),
+      );
+      if (response.statusCode == 200) {
+        var jsonResponse = response.body;
+        var resarray = jsonDecode(jsonResponse);
+        if (resarray['status'] == 'success') {
+          owner = User.fromJson(resarray['data'][0]);
+        }
+      }
+    } catch (e) {
+      print('Error fetching user details: $e');
+    }
+    return owner;
   }
 }
