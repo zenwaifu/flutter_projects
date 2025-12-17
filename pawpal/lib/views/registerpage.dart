@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pawpal/myconfig.dart';
+import 'package:pawpal/shared/pawloading.dart';
 import 'package:pawpal/views/loginpage.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -313,9 +314,11 @@ class _RegisterPageState extends State<RegisterPage> {
         return AlertDialog(
           content: Row(
             children: [
-              CircularProgressIndicator(),
-              SizedBox(width: 20),
+              //CircularProgressIndicator(),
+              //SizedBox(width: 20),
               Text('Registering...'),
+              SizedBox(width: 20),
+              PawLoading(),
             ],
           ),
         );
