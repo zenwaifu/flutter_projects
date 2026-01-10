@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pawpal/models/user.dart';
 import 'package:pawpal/myconfig.dart';
 import 'package:pawpal/shared/animated_route.dart';
-import 'package:pawpal/views/adoptionsubmitscreen.dart';
 import 'package:pawpal/views/loginpage.dart';
 import 'package:pawpal/views/mainpage.dart';
 import 'package:pawpal/views/myadoptionspage.dart';

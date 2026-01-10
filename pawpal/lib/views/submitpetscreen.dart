@@ -77,7 +77,7 @@ class _SubmitPetScreenState extends State<SubmitPetScreen> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
     final screenWidth = media.size.width;
-    final screenHeight = media.size.height;
+    // final screenHeight = media.size.height;
     final maxWidth = screenWidth > 600 ? 600.0 : screenWidth;
 
     return Scaffold(
