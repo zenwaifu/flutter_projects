@@ -1,4 +1,3 @@
-
 class User {
   String? userId;
   String? userEmail;
@@ -11,6 +10,7 @@ class User {
   String? userAddress; // NEW
   String? userLatitude; // Existing new
   String? userLongitude; // Existing new
+  int? userCredit;
 
   User({
     this.userId,
@@ -23,6 +23,7 @@ class User {
     this.userAddress,
     this.userLatitude,
     this.userLongitude,
+    this.userCredit,
   });
 
   User.fromJson(Map<String, dynamic> json) {
@@ -37,6 +38,8 @@ class User {
     userAddress = json['user_address']; // NEW
     userLatitude = json['user_latitude']; // NEW
     userLongitude = json['user_longitude']; // NEW
+
+    userCredit = int.parse(json['user_credit']);
   }
 
   Map<String, dynamic> toJson() {
@@ -52,6 +55,8 @@ class User {
     data['user_address'] = userAddress; // NEW
     data['user_latitude'] = userLatitude; // NEW
     data['user_longitude'] = userLongitude; // NEW
+
+    data['user_credit'] = userCredit;
 
     return data;
   }

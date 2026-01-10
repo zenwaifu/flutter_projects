@@ -5,4 +5,3 @@ My Diary is a personal journaling app designed to help you capture and organize 
 create, view, edit and delete entries, image support, search functionality, pagination
 
 # screenshots of app
-![image alt](image_url)

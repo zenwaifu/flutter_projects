@@ -28,6 +28,8 @@ class _RegisterPageState extends State<RegisterPage> {
   late double height, width;
   bool visible = true;
   bool isLoading = false;
+  bool isPasswordVisible = false;
+  bool isConfirmPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -108,17 +110,17 @@ class _RegisterPageState extends State<RegisterPage> {
                           TextFormField(
                             controller: passwordController,
                             keyboardType: TextInputType.visiblePassword,
-                            obscureText: visible,
+                            obscureText: !isPasswordVisible,
                             decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.lock),
                               labelText: 'Password',
                               labelStyle: TextStyle(color: mainPink),
-                              prefix: Icon(Icons.lock),
                               suffixIcon: IconButton(
                                 onPressed: () {
-                                  if (visible) {
-                                    visible = false;
+                                  if (isPasswordVisible) {
+                                    isPasswordVisible = false;
                                   } else {
-                                    visible = true;
+                                    isPasswordVisible = true;
                                   }
                                   setState(() {});
                                 },
@@ -141,17 +143,17 @@ class _RegisterPageState extends State<RegisterPage> {
                           TextFormField(
                             controller: confirmPasswordController,
                             keyboardType: TextInputType.visiblePassword,
-                            obscureText: visible,
+                            obscureText: !isConfirmPasswordVisible,
                             decoration: InputDecoration(
-                              prefix: Icon(Icons.lock),
+                              prefixIcon: Icon(Icons.lock),
                               labelText: 'Confirm Password',
                               labelStyle: TextStyle(color: mainPink),
                               suffixIcon: IconButton(
                                 onPressed: () {
-                                  if (visible) {
-                                    visible = false;
+                                  if (isConfirmPasswordVisible) {
+                                    isConfirmPasswordVisible = false;
                                   } else {
-                                    visible = true;
+                                    isConfirmPasswordVisible = true;
                                   }
                                   setState(() {});
                                 },
@@ -279,6 +281,12 @@ class _RegisterPageState extends State<RegisterPage> {
         content: Text('Please enter a valid email address'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }
+    if (phone.length < 10) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Phone number must be at least 10 characters')),
+      );
       return;
     }
     showDialog(

@@ -19,6 +19,7 @@ dependencies:
   geolocator: ^14.0.2
   intl: ^0.20.2
   url_launcher: ^6.3.2
+  webview_flutter: ^4.13.0
 
 dev_dependencies:
   flutter_test:

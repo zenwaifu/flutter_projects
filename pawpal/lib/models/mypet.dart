@@ -1,11 +1,15 @@
+
+import 'dart:convert';
+
 class MyPet {
   String? petId;
   String? user_id;
   String? petName;
+  int? petAge;
   String? petType;
   String? petCategory;
   String? petDescription;
-  String? imagePaths;
+  List<String>? imagePaths = [];
   String? latitude;
   String? longitude;
   String? dateCreated;
@@ -21,6 +25,7 @@ class MyPet {
     this.petId,
     this.user_id,
     this.petName,
+    this.petAge,
     this.petType,
     this.petCategory,
     this.petDescription,
@@ -41,10 +46,22 @@ class MyPet {
     petType = json['pet_type'];
     petCategory = json['category'];
     petDescription = json['description'];
-    imagePaths = json['image_paths'];
     latitude = json['lat'];
     longitude = json['lng'];
     dateCreated = json['created_at'];
+
+    if (json['pet_age'] != null) {
+    petAge = int.tryParse(json['pet_age'].toString());
+  }
+
+    //mapping image paths
+    if (json['image_paths'] != null) {
+      if(json['image_paths'] is String) {
+        imagePaths = List<String>.from(jsonDecode(json['image_paths']));
+      } else if (json['image_paths'] is List) {
+        imagePaths = List<String>.from(json['image_paths']);
+      }
+    }
 
     //mapping user fields
     user_name = json['name'];
@@ -58,6 +75,7 @@ class MyPet {
     data['pet_id'] = petId;
     data['user_id'] = user_id;
     data['pet_name'] = petName;
+    data['pet_age'] = petAge;
     data['pet_type'] = petType;
     data['category'] = petCategory;
     data['description'] = petDescription;
