@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:pawpal/models/adoption.dart';
 import 'package:pawpal/models/user.dart';
 import 'package:pawpal/myconfig.dart';
+import 'package:pawpal/shared/mydrawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyAdoptionsPage extends StatefulWidget {
@@ -64,7 +65,9 @@ class _MyAdoptionsPageState extends State<MyAdoptionsPage> {
                     },
                   ),
                 ),
+      drawer: MyDrawer(user: widget.user),
     );
+    
   }
 
   Widget _buildEmptyState() {

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:pawpal/models/donation.dart';
 import 'package:pawpal/models/user.dart';
 import 'package:pawpal/myconfig.dart';
+import 'package:pawpal/shared/mydrawer.dart';
 
 class MyDonationsPage extends StatefulWidget {
   final User? user;
@@ -80,6 +81,7 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                     ],
                   ),
                 ),
+      drawer: MyDrawer(user: widget.user),
     );
   }
 

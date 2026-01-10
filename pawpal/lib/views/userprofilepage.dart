@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:pawpal/models/user.dart';
 import 'package:pawpal/myconfig.dart';
+import 'package:pawpal/shared/mydrawer.dart';
+import 'package:pawpal/shared/pawloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -155,14 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               onPressed: isLoading ? null : updateProfile,
                               child: isLoading
-                                  ? const SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 2,
-                                      ),
-                                    )
+                                  ? PawLoading()
                                   : const Text(
                                       'Save',
                                       style: TextStyle(color: Colors.white),
@@ -213,6 +208,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
+      drawer: MyDrawer(user: widget.user),
     );
   }
 
