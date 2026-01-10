@@ -22,6 +22,7 @@ class DonationSubmitScreen extends StatefulWidget {
 class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
   final _formKey = GlobalKey<FormState>();
   final mainPink = const Color.fromRGBO(215, 54, 138, 1);
+  final midPink = const Color.fromRGBO(245, 154, 185, 1); //245, 210, 210
   final bgCream = const Color.fromRGBO(245, 234, 219, 1);
 
   final TextEditingController amountController = TextEditingController();
@@ -31,9 +32,9 @@ class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
   bool isSubmitting = false;
 
   final List<Map<String, dynamic>> donationTypes = [
-    {'type': 'Food', 'icon': Icons.fastfood, 'color': Colors.orange},
-    {'type': 'Medical', 'icon': Icons.medical_services, 'color': Colors.red},
-    {'type': 'Money', 'icon': Icons.monetization_on, 'color': Colors.green},
+    {'type': 'Food', 'icon': Icons.fastfood, 'color': Colors.orange.shade300},
+    {'type': 'Medical', 'icon': Icons.medical_services, 'color': Colors.red.shade300},
+    {'type': 'Money', 'icon': Icons.monetization_on, 'color': Colors.green.shade300},
   ];
 
   String getPetImageUrl(String imagePath) {
@@ -61,8 +62,8 @@ class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
           'Make a Donation',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
+        backgroundColor: mainPink,
+        foregroundColor: bgCream,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -108,10 +109,10 @@ class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
                               children: [
                                 Text(
                                   widget.pet.petName ?? 'Unknown Pet',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.green,
+                                    color: mainPink,
                                   ),
                                 ),
                                 const SizedBox(height: 4),
@@ -129,15 +130,15 @@ class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.orange.withOpacity(0.1),
+                                    color: midPink.withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: Colors.orange),
+                                    border: Border.all(color: midPink),
                                   ),
                                   child: Text(
                                     widget.pet.petCategory ?? 'Needs Help',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.orange,
+                                      color: midPink,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -164,15 +165,15 @@ class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            children: const [
-                              Icon(Icons.volunteer_activism, color: Colors.green),
+                            children: [
+                              Icon(Icons.volunteer_activism, color: mainPink),
                               SizedBox(width: 8),
                               Text(
                                 'Select Donation Type',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.green,
+                                  color: mainPink,
                                 ),
                               ),
                             ],
@@ -216,15 +217,15 @@ class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              children: const [
-                                Icon(Icons.edit_note, color: Colors.green),
+                              children: [
+                                Icon(Icons.edit_note, color: mainPink),
                                 SizedBox(width: 8),
                                 Text(
                                   'Donation Details',
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.green,
+                                    color: mainPink,
                                   ),
                                 ),
                               ],
@@ -245,7 +246,7 @@ class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
                                   ),
                                   filled: true,
                                   fillColor: Colors.white,
-                                  prefixIcon: const Icon(Icons.attach_money, color: Colors.green),
+                                  prefixIcon: Icon(Icons.attach_money, color: midPink),
                                 ),
                                 validator: (val) {
                                   if (val == null || val.trim().isEmpty) {
@@ -272,10 +273,11 @@ class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
                                   hintText: 'Describe your donation...',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: mainPink, width: 1),
                                   ),
                                   filled: true,
                                   fillColor: Colors.white,
-                                  prefixIcon: const Icon(Icons.description, color: Colors.green),
+                                  prefixIcon: Icon(Icons.description, color: midPink),
                                 ),
                                 validator: (val) {
                                   if (val == null || val.trim().isEmpty) {
@@ -299,7 +301,7 @@ class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
                     height: 50,
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: midPink,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),

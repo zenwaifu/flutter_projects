@@ -51,7 +51,7 @@ class _AdoptionSubmitScreenState extends State<AdoptionSubmitScreen> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: mainPink,
-        foregroundColor: Colors.white,
+        foregroundColor: bgCream,
       ),
       body: Center(
         child: SingleChildScrollView(

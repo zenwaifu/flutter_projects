@@ -18,18 +18,12 @@ class MyDonationsPage extends StatefulWidget {
 
 class _MyDonationsPageState extends State<MyDonationsPage> {
   final mainPink = const Color.fromRGBO(215, 54, 138, 1);
+  final midPink = const Color.fromRGBO(245, 154, 185, 1); //245, 210, 210
   final bgCream = const Color.fromRGBO(245, 234, 219, 1);
   
   List<Donation> donationsList = [];
   bool isLoading = false;
   DateFormat formatter = DateFormat('dd/MM/yyyy hh:mm a');
-
-  List<String> donationType = [
-    'Money',
-    'Food',
-    'Medical',
-    'Other'
-  ];
 
   @override
   void initState() {
@@ -38,9 +32,11 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
   }
 
   String getPetImageUrl(String? imagePath) {
-    if (imagePath == null) return '';
+    if (imagePath == null || imagePath.isEmpty) return '';
     if (imagePath.startsWith('http')) return imagePath;
-    return "${MyConfig.baseUrl}/pawpal/assets/$imagePath";
+    // Remove any leading slashes or "../assets/" prefix
+    String cleanPath = imagePath.replaceAll('../assets/', '').replaceAll('assets/', '');
+    return "${MyConfig.baseUrl}/pawpal/assets/$cleanPath";
   }
 
   @override
@@ -222,7 +218,7 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
               // Pet Image
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: donation.petImage != null
+                child: donation.petImage != null && donation.petImage!.isNotEmpty
                     ? Image.network(
                         getPetImageUrl(donation.petImage),
                         width: 80,
@@ -293,16 +289,16 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                     if (donation.donationType == 'Money')
                       Text(
                         'RM ${donation.amount}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                          color: midPink,
                         ),
                       )
                     else
                       Text(
                         donation.description ?? 'No description',
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        style: TextStyle(fontSize: 12, color: midPink),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -373,7 +369,7 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                     ),
                     const SizedBox(height: 20),
                     
-                    if (donation.petImage != null)
+                    if (donation.petImage != null && donation.petImage!.isNotEmpty)
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.network(
@@ -381,6 +377,12 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                           width: double.infinity,
                           height: 200,
                           fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => Container(
+                            width: double.infinity,
+                            height: 200,
+                            color: Colors.grey[300],
+                            child: const Icon(Icons.pets, size: 60),
+                          ),
                         ),
                       ),
                     const SizedBox(height: 16),
@@ -421,15 +423,15 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                     
                     Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.all(16),
+                      padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.1),
+                        color: mainPink.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.green),
+                        border: Border.all(color: mainPink),
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.favorite, color: Colors.green),
+                          Icon(Icons.favorite, color: mainPink),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
@@ -437,7 +439,7 @@ class _MyDonationsPageState extends State<MyDonationsPage> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.green[700],
+                                color: mainPink,
                               ),
                             ),
                           ),

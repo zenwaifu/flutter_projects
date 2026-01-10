@@ -32,9 +32,11 @@ class _MyAdoptionsPageState extends State<MyAdoptionsPage> {
   }
 
   String getPetImageUrl(String? imagePath) {
-    if (imagePath == null) return '';
+    if (imagePath == null || imagePath.isEmpty) return '';
     if (imagePath.startsWith('http')) return imagePath;
-    return "${MyConfig.baseUrl}/pawpal/assets/$imagePath";
+    // Remove any leading slashes or "../assets/" prefix
+    String cleanPath = imagePath.replaceAll('../assets/', '').replaceAll('assets/', '');
+    return "${MyConfig.baseUrl}/pawpal/assets/$cleanPath";
   }
 
   @override
@@ -67,7 +69,6 @@ class _MyAdoptionsPageState extends State<MyAdoptionsPage> {
                 ),
       drawer: MyDrawer(user: widget.user),
     );
-    
   }
 
   Widget _buildEmptyState() {
@@ -130,7 +131,7 @@ class _MyAdoptionsPageState extends State<MyAdoptionsPage> {
               // Pet Image
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: adoption.petImage != null
+                child: adoption.petImage != null && adoption.petImage!.isNotEmpty
                     ? Image.network(
                         getPetImageUrl(adoption.petImage),
                         width: 100,
@@ -270,7 +271,7 @@ class _MyAdoptionsPageState extends State<MyAdoptionsPage> {
                     const SizedBox(height: 20),
                     
                     // Pet Image
-                    if (adoption.petImage != null)
+                    if (adoption.petImage != null && adoption.petImage!.isNotEmpty)
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.network(
@@ -278,6 +279,12 @@ class _MyAdoptionsPageState extends State<MyAdoptionsPage> {
                           width: double.infinity,
                           height: 200,
                           fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => Container(
+                            width: double.infinity,
+                            height: 200,
+                            color: Colors.grey[300],
+                            child: const Icon(Icons.pets, size: 60),
+                          ),
                         ),
                       ),
                     const SizedBox(height: 16),

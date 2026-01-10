@@ -6,6 +6,7 @@ import 'package:pawpal/views/loginpage.dart';
 import 'package:pawpal/views/mainpage.dart';
 import 'package:pawpal/views/myadoptionspage.dart';
 import 'package:pawpal/views/mydonationspage.dart';
+import 'package:pawpal/views/userpetscreen.dart';
 import 'package:pawpal/views/userprofilepage.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -117,6 +118,22 @@ class _MyDrawerState extends State<MyDrawer> {
 
           const Divider(),
 
+          // My Pets
+          ListTile(
+            leading: const Icon(Icons.pets),
+            title: const Text('My Pets'),
+            enabled: widget.user != null,
+            onTap: widget.user != null
+                ? () {
+                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    AnimatedRoute.slideFromRight(UserPetScreen(user: widget.user)),
+                  );
+                }
+                : null,
+          ),
+
           // My Adoptions
           ListTile(
             leading: const Icon(Icons.favorite),
@@ -165,18 +182,6 @@ class _MyDrawerState extends State<MyDrawer> {
                     );
                   }
                 : null,
-          ),
-
-          // Settings
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Settings - Coming Soon')),
-              );
-            },
           ),
 
           const Divider(),
