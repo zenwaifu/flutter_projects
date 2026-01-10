@@ -390,7 +390,6 @@ class _DonationSubmitScreenState extends State<DonationSubmitScreen> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-
     setState(() => isSubmitting = true);
 
     try {

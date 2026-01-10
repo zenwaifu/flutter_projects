@@ -321,14 +321,14 @@ class _RegisterPageState extends State<RegisterPage> {
       builder: (context) {
         return AlertDialog(
           content: Row(
-            children: [
-              //CircularProgressIndicator(),
-              //SizedBox(width: 20),
-              Text('Registering...'),
-              SizedBox(width: 20),
-              PawLoading(),
-            ],
-          ),
+                      children: [
+                        Expanded( // Wrap your text here
+                          child: Text("Registering..."),
+                        ),
+                        const SizedBox(width: 20),
+                        PawLoading(), // The dots or spinner
+                      ],
+                    )
         );
       },
       barrierDismissible: false,

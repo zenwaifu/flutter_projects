@@ -663,7 +663,8 @@ void showSearchDialog() {
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: mainPink,
+                          foregroundColor: bgCream,
                           padding: const EdgeInsets.all(16),
                         ),
                         onPressed: () {
@@ -721,7 +722,7 @@ void showSearchDialog() {
     try {
       final response = await http.get(
         Uri.parse(
-          '${MyConfig.baseUrl}/pawpal/api/get_user_details.php?userid=$ownerid',
+          '${MyConfig.baseUrl}/pawpal/server/api/get_user_details.php?userid=$ownerid',
         ),
       );
       if (response.statusCode == 200) {
